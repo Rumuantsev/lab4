@@ -37,4 +37,20 @@ class Book {
     private Integer publishingYear;
     private String isbn;
     private String publisher;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPublishingYear() {
+        return publishingYear;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
 }
