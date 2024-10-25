@@ -19,22 +19,15 @@ public class Main {
         List<Person> people = gson.fromJson(reader, personListType);
 
         //1 задание
-
         System.out.println("Persons:");
-        people.stream()
-                .map(person -> person.getName() + " " + person.getSurname())
-                .forEach(System.out::println);
+        people.forEach(p -> System.out.println(p.getName() + " " + p.getSurname()));
         System.out.println("Count: " + people.size());
 
         //2 задание
 
-        Set<Book> uniqueBooksSet = new TreeSet<>(Comparator.comparing(Book::getIsbn));
-
-        uniqueBooksSet.addAll(
-                people.stream()
-                        .flatMap(person -> person.getFavoriteBooks().stream())
-                        .toList()
-        );
+        Set<Book> uniqueBooksSet = people.stream()
+                .flatMap(person -> person.getFavoriteBooks().stream())
+                .collect(Collectors.toSet());
 
         System.out.println("Unique books:");
         uniqueBooksSet.forEach(System.out::println);
@@ -44,15 +37,13 @@ public class Main {
         //3 задание
 
         System.out.println("All books sorted by publishing year:");
-        people.stream()
-                .flatMap(person -> person.getFavoriteBooks().stream())
+        uniqueBooksSet.stream()
                 .sorted(Comparator.comparingInt(Book::getPublishingYear))
                 .forEach(System.out::println);
 
         //4 задание
 
-        boolean hasAustenBooks = people.stream()
-                .flatMap(person -> person.getFavoriteBooks().stream())
+        boolean hasAustenBooks = uniqueBooksSet.stream()
                 .anyMatch(book -> book.getAuthor().equals("Jane Austen"));
 
         System.out.println(hasAustenBooks);
@@ -63,7 +54,7 @@ public class Main {
                 .map(person -> person.getFavoriteBooks().size())
                 .max(Integer::compareTo);
 
-        maxBooks.ifPresent(max -> System.out.println("Самое большое количество книг: " + max));
+        maxBooks.ifPresent(max -> System.out.println("Bigest count books: " + max));
 
         //6 задание
 
@@ -77,7 +68,7 @@ public class Main {
             people.stream()
                     .map(person -> {
                         double bookCount = person.getFavoriteBooks().size();
-                        String sms = (bookCount < average) ? "read more”" : (bookCount > average) ? "you are a bookworm" : "fine";
+                        String sms = (bookCount < average) ? "read more" : (bookCount > average) ? "you are a bookworm" : "fine";
                         return person.getName() + " " + person.getSurname() + " " + sms;
                     })
                     .forEach(System.out::println);

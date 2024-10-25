@@ -1,10 +1,13 @@
 package org.example;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Objects;
+
 
 @Getter
 @ToString
@@ -31,6 +34,7 @@ class Person {
 @Getter
 @ToString
 @AllArgsConstructor
+@EqualsAndHashCode
 class Book {
     private String name;
     private String author;
@@ -38,19 +42,11 @@ class Book {
     private String isbn;
     private String publisher;
 
-    public String getName() {
-        return name;
-    }
-
     public int getPublishingYear() {
         return publishingYear;
     }
 
     public String getAuthor() {
         return author;
-    }
-
-    public String getIsbn() {
-        return isbn;
     }
 }
